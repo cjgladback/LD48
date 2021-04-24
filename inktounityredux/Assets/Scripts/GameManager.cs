@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
         }
 
         //discover the location tags
+        /*
         var currentLocation = story.variablesState["location"] as Ink.Runtime.InkList;
         if (currentLocation.ContainsItemNamed("office"))
         {
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("We're at a crimescene.");
             background.GetComponent<SpriteRenderer>().sprite = boardroomSprite;
         }
+        */
 
         //TO-DO clear previously created characters
         int spawned = standBack.transform.childCount;
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(name);
 
             GameObject character = Instantiate(characterPrefab);
-            character.transform.SetParent(standBack.transform, false);
+            character.transform.SetParent(standBack.transform, true);
 
             //spent about 4 hours reading through all sorts of documentation and answers failing to find
             //the right way to use a string to find an object/prefab/what have ye to use
@@ -187,7 +189,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
-                Button button = CreateChoiceView(choice.text.Trim(), storyBacker);
+                Button button = CreateChoiceView(choice.text.Trim(), canvas);
                 // Tell the button what to do when we press it
                 button.onClick.AddListener(delegate {
                     OnClickChoiceButton(choice);
@@ -197,7 +199,7 @@ public class GameManager : MonoBehaviour
         // If we've read all the content and there's no choices, the story is finished!
         else
         {
-            Button choice = CreateChoiceView("End of story.\nRestart?", storyBacker);
+            Button choice = CreateChoiceView("End of story.\nRestart?", canvas);
             choice.onClick.AddListener(delegate {
                 Start();
             });
@@ -215,7 +217,10 @@ public class GameManager : MonoBehaviour
     void CreateContentView(string text, string voice, Image backer)
     {
         TextMeshProUGUI x;
+        x = textPrefab;
 
+        //for varied fonts, delete the above line "x = textPrefab" and uncomment the next if else statement
+        /*
         if (voice != "")
         {
             if (voice == "chat")
@@ -235,6 +240,7 @@ public class GameManager : MonoBehaviour
         {
             x = textPrefab;
         }
+        */
 
         // Creates paragraph from the TextMesh prefab and sets parent to the panel prefab instance
         TextMeshProUGUI storyText = Instantiate(x) as TextMeshProUGUI;
@@ -243,15 +249,17 @@ public class GameManager : MonoBehaviour
     }
 
     // Creates a button showing the choice text
-    Button CreateChoiceView(string text, Image backer)
+    Button CreateChoiceView(string text, Canvas uiSpace)
     {
         // Creates the button from a prefab and sets parent to the panel prefab instance
         Button choice = Instantiate(buttonPrefab) as Button;
-        choice.transform.SetParent(backer.transform, false);
+        choice.transform.SetParent(uiSpace.transform, false);
 
         // Gets the text from the button prefab
         TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
         choiceText.text = text;
+
+        Debug.Log(text);
 
         return choice;
     }
@@ -276,12 +284,14 @@ public class GameManager : MonoBehaviour
     // UI Prefabs
     [SerializeField]
     private TextMeshProUGUI textPrefab;
+    /*
     [SerializeField]
     private TextMeshProUGUI chatPrefab;
     [SerializeField]
     private TextMeshProUGUI sfxPrefab;
     [SerializeField]
     private TextMeshProUGUI loudPrefab;
+    */
 
     [SerializeField]
     private Button buttonPrefab;
@@ -289,14 +299,16 @@ public class GameManager : MonoBehaviour
     private Image panelPrefab;
 
     // Sprites
+    /*
     [SerializeField]
     private GameObject background;
     [SerializeField]
     private Sprite officeSprite;
     [SerializeField]
-    private Sprite boardroomSprite;
+    private Sprite boardroomSprite; */
     [SerializeField]
     private GameObject characterPrefab;
+    
 
     // Placement empties
     [SerializeField]

@@ -1522,7 +1522,7 @@ MonoBehaviour:
   sounds:
   - name: WheeDeeLoop
     clip: {fileID: 8300000, guid: 52e9eff140566e34fba22f557ff78b22, type: 3}
-    volume: 1
+    volume: 0.75
     pitch: 1
     loop: 1
     sfx: 0

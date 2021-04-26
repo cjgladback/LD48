@@ -4,19 +4,34 @@
 //this title, Of Sound Mind, works best if we bring up the weirdly intense release forms Kasey had to sign before they even knew her research would take her into the caves
 
 EXTERNAL holdIt(wait)
+EXTERNAL playIt(playing)
+EXTERNAL stopIt(playing)
 
-LIST location = pregame, soundcheck, frontdoor, entry, hall, hallwindow, stairs, light
+LIST location = carNight, carDay, lhTop, lhMid, lhGround, entry, hall, hallwindow, stairs, light
 
 LIST props = camera, photoBlank, photoCreep, release, book, research
 
+LIST sounds = roadF, road, wind, wheedee, wheedeeL, whim
+
 VAR wait = -1.1
 
+VAR playing = roadF
+VAR saying = wheedeeL
+
 === startscreen ===
+~ location = carNight
+~ saying = wheedeeL
+~ playing = road
+~ playIt(playing)
+~ playIt(saying)
 Places to go, people to see!
 + [Get on the road.]->ontheroad
 
 === ontheroad ===
-~ location = soundcheck
+~ stopIt(playing)
+~ playing = roadF
+~ playIt(playing)
+~ location = carDay
 ~ wait = 3
 ~ holdIt(wait)
 Okay okay, how 'bout this one? Did You Know: #kasey
@@ -185,7 +200,7 @@ Okay okay, how 'bout this one? Did You Know: #kasey
                                            ++++++++++++++++++++++++++++++++++++++++++++ [&]->arrival
 
 === arrival ===
-~ location = frontdoor
+~ location = carNight
 ~ wait = -1.1
                                   
                      
@@ -227,6 +242,16 @@ I vant to suck your blud. #dracula
 -> END
 
 === function holdIt(x) ===
+// Usually external functions can only return placeholder
+// results, otherwise they'd be defined in ink!
+~ return
+
+=== function playIt(x) ===
+// Usually external functions can only return placeholder
+// results, otherwise they'd be defined in ink!
+~ return
+
+=== function stopIt(x) ===
 // Usually external functions can only return placeholder
 // results, otherwise they'd be defined in ink!
 ~ return

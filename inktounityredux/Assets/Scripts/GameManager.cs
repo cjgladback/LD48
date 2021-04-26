@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
 
     public static event Action<Story> OnCreateStory;
     private List<GameObject> spawnedCharacters;
+    public SetVolume audioManager;
 
+    int pause = -1;
 
 
     void Start()
@@ -27,10 +29,34 @@ public class GameManager : MonoBehaviour
             StartCoroutine(StayRightThere(timeToWait));
         });
 
+        story.BindExternalFunction("playIt", (string aSound) => {
+            //SetVolume s = gameObject.AddComponent<SetVolume>();
+            audioManager.Play(aSound);
+        });
+
+        story.BindExternalFunction("stopIt", (string aSound) => {
+            //SetVolume s = gameObject.AddComponent<SetVolume>();
+            audioManager.StopPlaying(aSound);
+        });
+
         // Start the refresh cycle
         RefreshView();
 
+
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            pause = 1;
+            Pause();
+        } else if (Input.GetKeyUp("space"))
+        {
+            pause = -1;
+        }
+    }
+
 
     // This is the main function called every time the story changes. It does a few things:
     // Destroys all the old content and choices.
@@ -56,47 +82,75 @@ public class GameManager : MonoBehaviour
             //declaring and clearing the voice to hand through to CreateContentView()
             string voice = "";
 
+
             //check current tags for chat or sfx tags to alter voice
             List<string> tags = story.currentTags;
             if (tags.Count > 0)
             {
-                if (tags.Contains("chat"))
+                if (tags.Contains("kasey"))
                 {
-                    voice = "chat";
+                    voice = "kasey";
                 }
-                else if (tags.Contains("sfx"))
+                else if (tags.Contains("sarah"))
                 {
-                    voice = "sfx";
+                    voice = "sarah";
                 }
-                else if (tags.Contains("loud"))
+                else if (tags.Contains("beast"))
                 {
-                    voice = "loud";
+                    voice = "beast";
                 }
             }
+
 
             // Display the text on screen!
             CreateContentView(text, voice, storyBacker);
         }
 
         //discover the location tags
-        /*
+        //location list is: carNight, carDay, lhTop, lhMid, lhGround, entry, hall, hallwindow, stairs, light
         var currentLocation = story.variablesState["location"] as Ink.Runtime.InkList;
-        if (currentLocation.ContainsItemNamed("office"))
+        if (currentLocation.ContainsItemNamed("carNight"))
         {
-            Debug.Log("We're in the office.");
-            background.GetComponent<SpriteRenderer>().sprite = officeSprite;
+            background.GetComponent<SpriteRenderer>().sprite = carNightSprite;
         }
-        else if (currentLocation.ContainsItemNamed("meeting"))
+        else if (currentLocation.ContainsItemNamed("carDay"))
         {
-            Debug.Log("We're in the boardroom.");
-            background.GetComponent<SpriteRenderer>().sprite = boardroomSprite;
+            background.GetComponent<SpriteRenderer>().sprite = carDaySprite;
         }
-        else if (currentLocation.ContainsItemNamed("crimescene"))
+        else if (currentLocation.ContainsItemNamed("lhTop"))
         {
-            Debug.Log("We're at a crimescene.");
-            background.GetComponent<SpriteRenderer>().sprite = boardroomSprite;
+            background.GetComponent<SpriteRenderer>().sprite = lhTopSprite;
+        }
+        else if (currentLocation.ContainsItemNamed("lhMid"))
+        {
+            background.GetComponent<SpriteRenderer>().sprite = lhMidSprite;
+        }
+        else if (currentLocation.ContainsItemNamed("lhGround"))
+        {
+            background.GetComponent<SpriteRenderer>().sprite = lhGroundSprite;
+        }
+        /*
+        else if (currentLocation.ContainsItemNamed("entry"))
+        {
+            background.GetComponent<SpriteRenderer>().sprite = entrySprite;
         }
         */
+        else if (currentLocation.ContainsItemNamed("hall"))
+        {
+            background.GetComponent<SpriteRenderer>().sprite = hallSprite;
+        }
+        else if (currentLocation.ContainsItemNamed("hallwindow"))
+        {
+            background.GetComponent<SpriteRenderer>().sprite = hallWindowSprite;
+        }
+        else if (currentLocation.ContainsItemNamed("stairs"))
+        {
+            background.GetComponent<SpriteRenderer>().sprite = stairsSprite;
+        }
+        else if (currentLocation.ContainsItemNamed("light"))
+        {
+            background.GetComponent<SpriteRenderer>().sprite = lightSprite;
+        }
 
         //TO-DO clear previously created characters
         int spawned = standBack.transform.childCount;
@@ -189,9 +243,9 @@ public class GameManager : MonoBehaviour
             }*//*
         }*/
 
-        
 
-        
+
+
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
@@ -202,7 +256,7 @@ public class GameManager : MonoBehaviour
             {
                 //StartCoroutine(StayRightThere(story.variablesState["wait"] as string));
             }
-            else { 
+            else {
                 for (int i = 0; i < story.currentChoices.Count; i++)
                 {
                     Choice choice = story.currentChoices[i];
@@ -231,6 +285,12 @@ public class GameManager : MonoBehaviour
         story.ChooseChoiceIndex(0);
         RefreshView();
     }
+
+    public IEnumerator Pause()
+    {
+        yield return new WaitUntil(() => pause == -1);
+    }
+
 
     // When we click the choice button, tell the story to choose that choice!
     void OnClickChoiceButton(Choice choice)
@@ -267,6 +327,20 @@ public class GameManager : MonoBehaviour
             x = textPrefab;
         }
         */
+
+        if (voice != "")
+        {
+            if (voice == "kasey")
+            {
+                backer.color = kaseyColor;
+            } else if (voice == "sarah"){
+                backer.color = sarahColor;
+            }
+        } else
+        {
+            backer.color = beastColor;
+        }
+
 
         // Creates paragraph from the TextMesh prefab and sets parent to the panel prefab instance
         TextMeshProUGUI storyText = Instantiate(x) as TextMeshProUGUI;
@@ -325,16 +399,40 @@ public class GameManager : MonoBehaviour
     private Image panelPrefab;
 
     // Sprites
-    /*
     [SerializeField]
     private GameObject background;
+    //location list is: carNight, carDay, lhTop, lhMid, lhGround, entry, hall, hallwindow, stairs, light
     [SerializeField]
-    private Sprite officeSprite;
+    private Sprite carNightSprite;
     [SerializeField]
-    private Sprite boardroomSprite; */
+    private Sprite carDaySprite;
+    [SerializeField]
+    private Sprite lhTopSprite;
+    [SerializeField]
+    private Sprite lhMidSprite;
+    [SerializeField]
+    private Sprite lhGroundSprite;
+    //[SerializeField]
+    //private Sprite entrySprite;
+    [SerializeField]
+    private Sprite hallSprite;
+    [SerializeField]
+    private Sprite hallWindowSprite;
+    [SerializeField]
+    private Sprite stairsSprite;
+    [SerializeField]
+    private Sprite lightSprite;
     [SerializeField]
     private GameObject characterPrefab;
-    
+
+    //Colors for speech bubbles
+    [SerializeField]
+    private Color kaseyColor;
+    [SerializeField]
+    private Color sarahColor;
+    [SerializeField]
+    private Color beastColor;
+
 
     // Placement empties
     [SerializeField]

@@ -21,13 +21,13 @@ TODO: (significantly started ~ vs better for on stream less focus ^)
 Art needed:
 Backgrounds:
 - Outside game
-- Car interior (with volume knobs?) ~
+- ~~Car interior (with volume knobs?)~~
 - ~~Car interior night~~
 - Car exterior (maybe just for individual ends)
-- Front of lighthouse
+- ~~Front of lighthouse~~
 - Entryway
-- Hall
-- Hall window (more lit)
+- ~~Hall~~
+- ~~Hall window (more lit)~~
 - Stairs
 - Beacon rooms
 - Photo piles

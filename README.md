@@ -9,6 +9,7 @@ TODO: (significantly started ~ vs better for on stream less focus ^)
 - Pile photos--increase count by singles until re-entering, increase count substantially for re-entry
 - Take photos--cue animation (oh you sweet summer child) and sound along with piles and camera state changes
 - Cue taking photos branch and results with a hotkey?
+- Set aspect ratio to work with background paints
 - Make room art (blender + paintover?) ^
 - Make camera, polaroids, books, and notes art ^
 - Make flash overlays art (with and without monsters) ^
@@ -20,8 +21,8 @@ TODO: (significantly started ~ vs better for on stream less focus ^)
 Art needed:
 Backgrounds:
 - Outside game
-- Car interior (with volume knobs?)
-- Car interior night
+- Car interior (with volume knobs?) ~
+- ~~Car interior night~~
 - Car exterior (maybe just for individual ends)
 - Front of lighthouse
 - Entryway

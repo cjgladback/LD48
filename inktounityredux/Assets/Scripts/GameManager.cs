@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 //using DG.Tweening;
@@ -15,11 +16,16 @@ public class GameManager : MonoBehaviour
     private List<GameObject> spawnedCharacters;
 
 
+
     void Start()
     {
         // Load the next story block
         story = new Story(inkJSONAsset.text);
         if (OnCreateStory != null) OnCreateStory(story);
+
+        story.BindExternalFunction("holdIt", (string timeToWait) => {
+            StartCoroutine(StayRightThere(timeToWait));
+        });
 
         // Start the refresh cycle
         RefreshView();
@@ -100,13 +106,13 @@ public class GameManager : MonoBehaviour
         }
 
         //run forloop through present characters to determine their number and therefore placement?
-        var inSight = story.variablesState["present"] as Ink.Runtime.InkList;
+        var inSight = story.variablesState["props"] as Ink.Runtime.InkList;
         //Debug.Log(inSight.maxItem.Value + " should be the number.");
         //Ink lists start at 1, unlike arrays
         foreach (var item in inSight)
         {
             string name = $"{item.Key}";
-            name = name.Replace("present.", "");
+            name = name.Replace("props.", "");
             Debug.Log(name);
 
             GameObject character = Instantiate(characterPrefab);
@@ -183,17 +189,30 @@ public class GameManager : MonoBehaviour
             }*//*
         }*/
 
+        
+
+        
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
-            for (int i = 0; i < story.currentChoices.Count; i++)
+            //check if it's just an ampersand (noting an invisible choice in this story) //can't check if we have a length of time we intend to wait//
+            //this unfortunately doesn't guarantee that the waiting and moving on action is indeed happening, but we got null errors did anything fancy here
+            //instead of calling the function from Ink
+            if (story.currentChoices[0].text.Trim() == "&" /*&& float.Parse(story.variablesState["wait"] as string) != -1.1*/)
             {
-                Choice choice = story.currentChoices[i];
-                Button button = CreateChoiceView(choice.text.Trim(), canvas);
-                // Tell the button what to do when we press it
-                button.onClick.AddListener(delegate {
-                    OnClickChoiceButton(choice);
-                });
+                //StartCoroutine(StayRightThere(story.variablesState["wait"] as string));
+            }
+            else { 
+                for (int i = 0; i < story.currentChoices.Count; i++)
+                {
+                    Choice choice = story.currentChoices[i];
+                    Button button = CreateChoiceView(choice.text.Trim(), canvas);
+                    // Tell the button what to do when we press it
+                    button.onClick.AddListener(delegate
+                    {
+                        OnClickChoiceButton(choice);
+                    });
+                }
             }
         }
         // If we've read all the content and there's no choices, the story is finished!
@@ -204,6 +223,13 @@ public class GameManager : MonoBehaviour
                 Start();
             });
         }
+    }
+
+    public IEnumerator StayRightThere(string time)
+    {
+        yield return new WaitForSeconds(float.Parse(time));
+        story.ChooseChoiceIndex(0);
+        RefreshView();
     }
 
     // When we click the choice button, tell the story to choose that choice!
@@ -259,7 +285,7 @@ public class GameManager : MonoBehaviour
         TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
         choiceText.text = text;
 
-        Debug.Log(text);
+        //Debug.Log(text);
 
         return choice;
     }

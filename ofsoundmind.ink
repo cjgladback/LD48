@@ -1,108 +1,159 @@
+-> startscreen
+
 //alternative names: Appearances to the Contrary, Shots in the Dark
 //this title, Of Sound Mind, works best if we bring up the weirdly intense release forms Kasey had to sign before they even knew her research would take her into the caves
+
+EXTERNAL holdIt(wait)
 
 LIST location = pregame, soundcheck, frontdoor, entry, hall, hallwindow, stairs, light
 
 LIST props = camera, photoBlank, photoCreep, release, book, research
 
--> startscreen
+VAR wait = -1.1
+
 === startscreen ===
 Places to go, people to see!
 + [Get on the road.]->ontheroad
 
 === ontheroad ===
 ~ location = soundcheck
+~ wait = 3
+~ holdIt(wait)
 Okay okay, how 'bout this one? Did You Know: #kasey
 + [&]
+~ holdIt(wait)
  -- The urge to sing The Lion Sleeps tonight is always just a whim away, a whim away, a whim away, a whim away... #kasey
  ++ [&]
+ ~ holdIt(wait)
   --- Oh no. Where'd you hear that one? #sarah
   +++ [&]
+  ~ holdIt(wait)
    ---- Ah, I think it was a repost in a collection of cat puns, of all things. #kasey
    ++++ [&]
+   ~ holdIt(wait)
     ----- Cats? #sarah
     +++++ [&]
+    ~ holdIt(wait)
      ------ The mention of the word "lion" was enough, I suppose. #kasey
      ++++++ [&]
+     ~ holdIt(wait)
       ------- I guess so. #sarah
       +++++++ [&]
+      ~ holdIt(wait)
        -------- Hey, how is the little lion, by the way? #kasey
        ++++++++ [&]
+       ~ holdIt(wait)
         --------- Neko? He's great. Sam's watching him while I'm gone. Pretty sure I lost the title of "best human" when the first fish can opened. #sarah
         +++++++++ [&]
+        ~ holdIt(wait)
          ---------- Aw! Honestly, I miss him almost as much as Rufus. Wish you could've brought him along. #kasey
          ++++++++++ [&]
+         ~ holdIt(wait)
           ----------- Can you imagine? Cross country with a cat? The sound alone would drive me crazy in minutes. Plus, no way would I get him back in the car for the next leg. #sarah
           +++++++++++ [&]
+          ~ holdIt(wait)
            ------------ True. Though I'm sure the lighthouse conservators would understand if I inexplicably had a cat all the sudden, scratching up the antique woodwork and visitors. #kasey
            ++++++++++++ [&]
+           ~ holdIt(wait)
             ------------- Oh yeah, old buildings are famously built to last... unless someone uses them as a scratching post. #sarah
             +++++++++++++ [&]
+            ~ holdIt(wait)
              -------------- Just like the people who fund their upkeep. #kasey
              ++++++++++++++ [&]
+             ~ holdIt(wait)
               --------------- Anybody reduced you to clawing? #sarah
               +++++++++++++++ [&]
+              ~ holdIt(wait)
                ---------------- No, no. The hands-on ones have been relatively content to leave me to my hideyholes since that whole release form panic. #kasey
                ++++++++++++++++ [&]
+               ~ holdIt(wait)
                 ----------------- Oh yes, the Panic of 86. #sarah
                 +++++++++++++++++ [&]
+                ~ holdIt(wait)
                  ------------------ Sorry, the what? #kasey
                  ++++++++++++++++++ [&]
+                 ~ holdIt(wait)
                   ------------------- The one where they threatened to 86 your whole deal cause someone forgot to mail the paperwork. #sarah
                   +++++++++++++++++++ [&]
+                  ~ holdIt(wait)
                    -------------------- Oh, ha. Yeah. #kasey
                    ++++++++++++++++++++ [&]
+                   ~ holdIt(wait)
                     --------------------- I mean, I don't want you to sue me either, but that sounded extreme. #sarah
                     +++++++++++++++++++++ [&]
+                    ~ holdIt(wait)
                      ---------------------- It wasn't anything I haven't signed before. And it's their first time handling this program. They were nervous. #kasey
                      ++++++++++++++++++++++ [&]
+                     ~ holdIt(wait)
                       ----------------------- The only thing odd was that they encouraged me to go down to check out the caves while they processed it. #kasey
                       +++++++++++++++++++++++ [&]
+                      ~ holdIt(wait)
                        ------------------------ Like they thought I was more likely to trip on the stairs than while spelunking. I get the feeling they don't get out much. #kasey
                        ++++++++++++++++++++++++ [&]
+                       ~ holdIt(wait)
                         ------------------------- Or one of their job boards sold it as "kickin' it old school in a lighthouse" and they were worried you meant the bucket. #sarah
                         +++++++++++++++++++++++++ [&]
+                        ~ holdIt(wait)
                          -------------------------- Ha. Anyway, safety first. #kasey
                          ++++++++++++++++++++++++++ [&]
+                         ~ holdIt(wait)
                           --------------------------- Legally speaking. #sarah
                           +++++++++++++++++++++++++++ [&]
+                          ~ holdIt(wait)
                            ---------------------------- Speaking of, did you get a chance to check your headlights are working? There are a lot of dropoffs around here. #kasey
                            ++++++++++++++++++++++++++++ [&]
+                           ~ holdIt(wait)
                             ----------------------------- Mine have gone out a few times on the way back from town and there are some harrowing turns. #kasey
                             +++++++++++++++++++++++++++++ [&]
+                            ~ holdIt(wait)
                              ------------------------------ I should be there before dusk - wait, "a few times?!" #sarah
                              ++++++++++++++++++++++++++++++ [&]
+                             ~ holdIt(wait)
                               ------------------------------- Listen, a fully functioning automobile is outside of my prodigious and prestigious residency budget. Anyway, did you check? #kasey
                               +++++++++++++++++++++++++++++++ [&]
+                              ~ holdIt(wait)
                                -------------------------------- Yeah, my dad did the full gamut of checks before I had a chance. I was more worried I'd forget something on the packing list. #sarah
                                ++++++++++++++++++++++++++++++++ [&]
+                               ~ holdIt(wait)
                                 --------------------------------- Oh, did you bring the camera? #kasey
                                 +++++++++++++++++++++++++++++++++ [&]
+                                ~ holdIt(wait)
                                  ---------------------------------- Yes. And enough of the film we could burn it for heat if we needed. The whole vacation stress test is a go. #sarah
                                  ++++++++++++++++++++++++++++++++++ [&]
+                                 ~ holdIt(wait)
                                   ----------------------------------- Fantastic! I can't wait to show you around the caves here, there are so many cool phenomena! I swear some of them are previously unrecorded. #kasey
                                   +++++++++++++++++++++++++++++++++++ [&]
+                                  ~ holdIt(wait)
                                    ------------------------------------ Oh! Oh! Even better, one of the ones I can't find in any research is in a section with magnetic fields that mess with my phone's power source! #kasey
                                    ++++++++++++++++++++++++++++++++++++ [&]
+                                   ~ holdIt(wait)
                                     ------------------------------------- Is your phone okay? #sarah
                                     +++++++++++++++++++++++++++++++++++++ [&]
-                                     -------------------------------------- Yeah, it always powers back on - but! I haven't gotten a picture. Now, we can say that the first photograph was taken the original prototype Sarah N. Dippy Pic! #kasey
+                                    ~ holdIt(wait)
+                                     -------------------------------------- Yeah, it always powers back on - but! I haven't gotten a picture. Now, we can say that the first photograph was taken on the original prototype Sarah N. Dippy Pic! #kasey
                                      ++++++++++++++++++++++++++++++++++++++ [&]
+                                     ~ holdIt(wait)
                                       --------------------------------------- I'm never calling it that. #sarah
                                       +++++++++++++++++++++++++++++++++++++++ [&]
+                                      ~ holdIt(wait)
                                        ---------------------------------------- Fair. Wise. Measured. #kasey
                                        ++++++++++++++++++++++++++++++++++++++++ [&]
+                                       ~ holdIt(wait)
                                         ----------------------------------------- Ah I can't wait to see you. But I gotta go write some reports and you need to focus on the road. #kasey
                                         +++++++++++++++++++++++++++++++++++++++++ [&]
+                                        ~ holdIt(wait)
                                          ------------------------------------------ You go, girl. Work that paper. #sarah
                                          ++++++++++++++++++++++++++++++++++++++++++ [&]
+                                         ~ holdIt(wait)
                                           ------------------------------------------- Drive safely; watch the turns. #kasey
                                           +++++++++++++++++++++++++++++++++++++++++++ [&]
+                                          ~ holdIt(wait)
                                            -------------------------------------------- Will do. See you soon. #sarah
                                            ++++++++++++++++++++++++++++++++++++++++++++ [&]->arrival
 
 === arrival ===
-
+~ location = frontdoor
+~ wait = -1.1
                                   
                      
                      
@@ -141,6 +192,12 @@ I vant to suck your blud. #dracula
 === finish ===
 \ 
 -> END
+
+=== function holdIt(x) ===
+// Usually external functions can only return placeholder
+// results, otherwise they'd be defined in ink!
+~ return
+
 
 //tags list:
 //#manager #msloop #dare #brad #whitney #julie #shawndra #stephen #river

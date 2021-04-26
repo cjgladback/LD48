@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+//this is a combination of Brackeys' video, Intro to AUDIO in Unity: https://www.youtube.com/watch?v=6OT43pvUyfY
+//and this process: https://gamedevbeginner.com/the-right-way-to-make-a-volume-slider-in-unity-using-logarithmic-conversion/
+//I mostly smashed them together and modified them for three sliders
+//I definitely needed to add the script to a parent canvas in order to access the specialized functions from the sliders; glad I finally saw that comment
 public class SetVolume : MonoBehaviour
 {
     public Sound[] sounds;

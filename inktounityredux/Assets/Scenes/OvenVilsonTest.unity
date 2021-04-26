@@ -1140,7 +1140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae6455a7c39db944a79e536fd746726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSONAsset: {fileID: 4900000, guid: 89767f7c92129634283bcb594f7cd661, type: 3}
+  inkJSONAsset: {fileID: 4900000, guid: 56c8e4d618a526645b8f17054f9fb669, type: 3}
   canvas: {fileID: 88598114}
   textPrefab: {fileID: 1411760420019925553, guid: 29930022638b40a4dbeb3349e963a86f, type: 3}
   buttonPrefab: {fileID: 707941349475840276, guid: cefc51f1efc5b7940bc135190eb2c484, type: 3}

@@ -9,7 +9,7 @@ EXTERNAL holdIt(wait)
 EXTERNAL playIt(playing)
 EXTERNAL stopIt(playing)
 
-LIST location = carNight, carDay, lhTop, lhMid, lhGround, entry, hall, hallwindow, stairs, light
+LIST location = carNight, carDay, lhTop, lhMid, lhGround, entry, hall, hallwindow, stairs, light, endCrash
 
 LIST props = camera, photoBlank, photoCreep, release, book, research
 
@@ -17,11 +17,15 @@ LIST sounds = roadF, road, creak, wheedee, wheedeeL, whim
 
 VAR wait = -1.1
 VAR neg = 0
+VAR photos = 0
 
 VAR playing = roadF
 VAR saying = wheedeeL
 
 === startscreen ===
+~ neg = 0
+~ photos = 0
+~ wait = -1.1
 ~ location = carNight
 ~ saying = wheedeeL
 ~ playing = road
@@ -223,11 +227,189 @@ Finally. I am so late. #narr
  -- <>no mistaking this is the place. #narr
  ++ Though she didn't mention[...]
  ~ location = lhMid
-  --- <> the huge, dead tree. I'll be parking well away from that, thanks.
+  --- <> the huge, dead tree. I'll be parking well away from that, thanks.#narr
   +++ No wonder[...]
   ~ location = lhGround
-   ---- <> they needed her to sign her life away in that release form. "Quick, before you're crushed!"
+   ---- <> they needed Kasey to sign her life away in that release form. "Quick, before you're crushed!"#narr
+   ++++ "No, quicker[!"]
+    ----- <>, the breeze is picking up!" Honestly though, it'll be good to get inside here. I didn't think lake effect weather applied to one this size. I should bring the camera with me.#narr
+    +++++ [Go for the door.]->arrive02
+    +++++ [Consider.]
+     ------ Is there something wrong?#narr
+     ++++++ [Just go say hi.]->arrive02
+     ++++++ Honestly[...]
+     ~neg++
+      ------- <>, yes. Everything's too...present here. Too quiet; too loud.#narr
+      +++++++ [Am I freakin' sundowning?]
+      ~ neg ++
+      ->arrive02
+      +++++++ [Turn around?]
+       --------What am I gonna do? Drive back? Call off the whole trip because I got the heeby jeebies?#narr
+       ++++++++ [Run away.]->deaths.crash
+       ++++++++ Calling off requires a phone[.]
+        --------- <>, and so does safety when driving at night. Let's me just get in out of the wind and take a breath.#narr
+        +++++++++ [Before I do something foolish.]->arrive02
 
+= arrive02
+~ props += camera
+Kasey's usually asleep by now.
++ [Check if it's unlocked.]->arrive02unlocked
++ [Knock.]
+ - She's not responding. Though maybe I'm just too quiet.
+ + [Try the lock.]->arrive02unlocked
+ + [Put my weight into it.]
+ ~ wait = 1
+ ~ holdIt(wait)
+  -- ...
+  ++ [&]
+   --- Y'know what, good for the old building blocking sounds like a champ.
+   +++ [Is it unlocked?]->arrive02unlocked
+ 
+
+
+= arrive02unlocked
+~ location = hall
+It...is. She said it would be, but that's when I said I'd be here hours ago.
++ Still[...]
+  --- <>, the warm welcome's appreciated.
+  +++ {wait == 1} [Gotta be quiet if she's sleeping.]
+  ~ wait = -1.1
+  ->arrive03thehall
+  +++ {wait != 1} [Is she in here?]->arrive03thehall
+
+= arrive03thehall
+~ location = hall
+It's so dark. I can hardly see anything.
++ [What's this...]->hallChecks
++ [Go to the stairs.]->theStairs
++ [Take a photo.]->Photography
+
+= hallChecks
+~ location = hall
+What's this on the table? Can I see them by the window?
++ [An old book?]->oldBook
++ [A thin book?]->thinBook
++ [A new book?]->thinBook
++ [A thick book?]->thickBook
++ [Take a photo.]->Photography
+
+= oldBook
+~ location = hallwindow
+~ props += book
+
+-> hallChecks
+
+
+= thinBook
+~ location = hallwindow
+~ props += book
+"Magnetic Marvels?" I...should have realized Kasey would read pop science in her down time.
++ [Assuming it was downtime.]
+->hallChecks
+
+= newBook
+~ location = hallwindow
+~ props += book
+This says it's called "Lost to History: The Mystery of the Un-Known."
++[What's its blurb?]
+ -- "From the plainly ignored truth of Roanoke to the ghost towns of the Old West, a book about towns we know were settled and when they disappeared."
+ ++ [I wonder if it's any good.]->hallChecks
+ ++ [Take a photo.]->Photography
+ 
+ = thickBook
+ ~ location = hallwindow
+~ props += book
+"Megafauna." An encyclopedia. {thinBook:I guess it's not just pop science, then.}
++ [Seems...dry.]->hallChecks
++ [Take a photo.]
+~ neg ++
+->Photography
+
+
+=== theStairs ===
+{photos >= 5:
+~ neg ++
+}
+{photos >= 5:How did these photos get to the steps?|This would be a nice photo, test, too, in the morning.}
++ [Go up.]->theTower
++ [Return to the hall.]->arrival.hallChecks
++ [Take a photo.]->Photography
+
+=== theTower ===
+{Finally, some light.|neg >= 10: What's moving in the trees?->deaths.found}
++ [What's there...]->finish
++ [Take a photo.]->Photography
+
+
+
+=== Photography
+~ photos ++
+{neg >= 10: What the hell is that? Frick->dropPhoto|The flash is at least some light. A moment to see->->}
+=dropPhoto
+<> it all.
++[Drop the photo.]->->
+
+=== deaths ===
+
+= crash
+~ location = carNight
+~ stopIt(playing)
+~ playing = road
+~ playIt(playing)
+That was...#sarah
++ [Close.]
+~ neg ++
+->crashClose
++ [Weird.]
+ -- Wait, where are my lights? #narr
+ ++ [More importantly...]
+  --- Why can't I turn?! #sarah
+  +++ [No!]
+   ~ location = endCrash
+   ~ wait = 5
+   ~ holdIt(wait)
+   ----...
+   ++++[...]->finish
+   
+
+=crashClose
+Now the main question is, is this town likely to have a payphone?#narr
++ And did I[...]
+ -- <> keep that calling card in my wallet?
+ ++ [Though also...]
+  --- Wait, where are my lights? #narr
+  +++ [More importantly...]
+   ---- What the hell is that? #sarah
+   ++++ [No!]
+    ~ location = endCrash
+    ~ wait = 5
+    ~ holdIt(wait)
+    -----...
+    +++++[&]->finish
+
+=found
+Hide - hide - I gotta
++ [HIDE!]->foundMorning
++ [Down the stairs!]->foundSlip
+
+=foundMorning
+~location = carDay
+I can't...I don't...
++[What happened?]
+ -- I don't...
+ ++ [Where's Kasey?]
+ ~ wait = 3
+ ~ holdIt(wait)
+  -- I can't...
+  ++ [&]->finish
+  
+=foundSlip
+No, wait, the photos-
++[AH!]
+ ~ wait = 3
+ ~ holdIt(wait)
+  -- I can't...
+  ++ [&]->finish
 
 -> it_begins
 === it_begins ===

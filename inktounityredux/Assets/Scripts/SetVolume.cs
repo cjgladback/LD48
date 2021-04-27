@@ -39,7 +39,7 @@ public class SetVolume : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        foreach(Sound s in sounds)
+        foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -101,8 +101,8 @@ public class SetVolume : MonoBehaviour
         //float sliderValueMaster = sliderMaster.value;
         mixer.SetFloat("MasterVol", Mathf.Log10(sliderValueMaster) * 20);
         PlayerPrefs.SetFloat("MasterVolume", sliderValueMaster);
-        
-        
+
+
         /*
         //float sliderValue = sliderMusic.value;
         mixer.SetFloat("MusicVol", Mathf.Log10(sliderValue) * 20);
@@ -148,10 +148,10 @@ public class SetVolume : MonoBehaviour
         mixer.SetFloat("MusicVol", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("MusicVolume", sliderValue);
         */
-        
+
         //float sliderValueSfx = sliderMusic.value;
         mixer.SetFloat("SfxVol", Mathf.Log10(sliderValueSfx) * 20);
         PlayerPrefs.SetFloat("SfxVolume", sliderValueSfx);
-        
+
     }
 }

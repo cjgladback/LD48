@@ -25,16 +25,19 @@ public class GameManager : MonoBehaviour
         story = new Story(inkJSONAsset.text);
         if (OnCreateStory != null) OnCreateStory(story);
 
-        story.BindExternalFunction("holdIt", (string timeToWait) => {
+        story.BindExternalFunction("holdIt", (string timeToWait) =>
+        {
             StartCoroutine(StayRightThere(timeToWait));
         });
 
-        story.BindExternalFunction("playIt", (string aSound) => {
+        story.BindExternalFunction("playIt", (string aSound) =>
+        {
             //SetVolume s = gameObject.AddComponent<SetVolume>();
             audioManager.Play(aSound);
         });
 
-        story.BindExternalFunction("stopIt", (string aSound) => {
+        story.BindExternalFunction("stopIt", (string aSound) =>
+        {
             //SetVolume s = gameObject.AddComponent<SetVolume>();
             audioManager.StopPlaying(aSound);
         });
@@ -268,7 +271,8 @@ public class GameManager : MonoBehaviour
             {
                 //StartCoroutine(StayRightThere(story.variablesState["wait"] as string));
             }
-            else {
+            else
+            {
                 for (int i = 0; i < story.currentChoices.Count; i++)
                 {
                     Choice choice = story.currentChoices[i];
@@ -285,7 +289,8 @@ public class GameManager : MonoBehaviour
         else
         {
             Button choice = CreateChoiceView("End of story.\nRestart?", canvas);
-            choice.onClick.AddListener(delegate {
+            choice.onClick.AddListener(delegate
+            {
                 Start();
             });
         }
@@ -349,10 +354,13 @@ public class GameManager : MonoBehaviour
             if (voice == "kasey")
             {
                 backer.color = kaseyColor;
-            } else if (voice == "sarah"){
+            }
+            else if (voice == "sarah")
+            {
                 backer.color = sarahColor;
             }
-        } else
+        }
+        else
         {
             backer.color = beastColor;
         }

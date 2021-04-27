@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> spawnedCharacters;
     public SetVolume audioManager;
 
-    int pause = -1;
+    //int pause = -1;
 
 
     void Start()
@@ -45,18 +45,30 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /*
+    // an attempt at making the game pause; does not seem to effect the operations of the autoplay sections which I should have seen coming
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyUp("space"))
         {
             pause = 1;
+            Debug.Log(pause);
             Pause();
-        } else if (Input.GetKeyUp("space"))
-        {
-            pause = -1;
         }
     }
+    */
 
+    /*
+    //skipping function--it's fast, but it doesn't stop
+    void Update()
+    {
+        if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(1))
+        {
+            story.ChooseChoiceIndex(0);
+            RefreshView();
+        }
+    }
+    */
 
     // This is the main function called every time the story changes. It does a few things:
     // Destroys all the old content and choices.
@@ -286,10 +298,14 @@ public class GameManager : MonoBehaviour
         RefreshView();
     }
 
+    /*
     public IEnumerator Pause()
     {
-        yield return new WaitUntil(() => pause == -1);
+        yield return new WaitUntil(() => Input.GetKeyDown("space"));
+        pause = -1;
+        Debug.Log(pause);
     }
+    */
 
 
     // When we click the choice button, tell the story to choose that choice!
